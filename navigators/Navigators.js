@@ -11,7 +11,6 @@ const Stack = createNativeStackNavigator();
 
 const TabScreen = () => {
   return (
-    // TODO: move content of <NavigationContainer> here
     <Tab.Navigator>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
@@ -28,7 +27,7 @@ const StackScreen = () => {
   );
 };
 
-const Navigator = () => {
+const Navigators = () => {
   return (
     <NavigationContainer>
       <StackScreen />
@@ -36,4 +35,4 @@ const Navigator = () => {
   );
 };
 
-export default Navigator;
+export default Navigators;

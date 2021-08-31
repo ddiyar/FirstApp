@@ -1,12 +1,13 @@
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import {Platform, SafeAreaView, StyleSheet, View} from 'react-native';
-import List from './components/List';
+import List from '../components/List';
+import PropTypes from 'prop-types';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.droidSafeArea}>
-      <View style{styles.container}>
+      <View style={styles.container}>
         <List navigation={navigation} />
       </View>
       <StatusBar style="auto"/>

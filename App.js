@@ -1,9 +1,9 @@
 import React from 'react';
-import Navigator from './navigators/Navigators';
+import Navigators from './navigators/Navigators';
 
 const App = () => {
-  return
-<Navigator />;
+  return (
+<Navigators></Navigators>)
 };
 
 export default App;
