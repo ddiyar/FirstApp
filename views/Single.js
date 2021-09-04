@@ -1,26 +1,10 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, Text} from 'react-native';
-import PropTypes from 'prop-types';
-import {uploadsUrl} from '../utils/variables';
-import {DateTime} from 'luxon';
 
-const Single = ({route}) => {
-  const {params} = route;
+const Single = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>{params.title}</Text>
-      <Image
-        style={{width: 200, height: 200}}
-        source={{uri: uploadsUrl + params.filename}}
-      />
-      <Text>{params.description}</Text>
-      <Text>{params.user_id}</Text>
-      <Text>
-        {DateTime.fromISO(params.time_added)
-        .setLocale('fi')
-        .toLocaleString({month: 'long', day: 'numeric', year: 'numeric'})}
-      </Text>
-      <Text>{params.media_type}</Text>
+      <Text>Single</Text>
     </SafeAreaView>
   );
 };
@@ -35,7 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-Single.propTypes = {
-  route: PropTypes.object.isRequired,
-};
 export default Single;

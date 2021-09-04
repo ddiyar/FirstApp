@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, Text} from 'react-native';
-import PropTypes from 'prop-types';
 
-const Profile = (props) => {
+const Profile = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>
@@ -19,7 +18,5 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
 });
-
-Profile.propTypes = {};
 
 export default Profile;
