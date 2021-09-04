@@ -10,17 +10,26 @@ const Single = ({route}) => {
     <SafeAreaView style={styles.container}>
       <Text>{params.title}</Text>
       <Image
-        style={{width: 200, height: 200}}
-        source={{uri: uploadsUrl + params.filename}}
+        source={{
+          uri:
+          'https://media.mw.metropolia.fi/wbma/uploads/' +
+          useRoute().params.filename,
+        }}
+        style={{
+          borderBottomLeftRadius: 50,
+          borderRadius: 10,
+          width: 300,
+          marginRight: 10,
+          height: 300
+        }}
       />
       <Text>{params.description}</Text>
-      <Text>{params.user_id}</Text>
       <Text>
         {DateTime.fromISO(params.time_added)
         .setLocale('fi')
         .toLocaleString({month: 'long', day: 'numeric', year: 'numeric'})}
       </Text>
-      <Text>{params.media_type}</Text>
+      <Text>{params.title}</Text>
     </SafeAreaView>
   );
 };
