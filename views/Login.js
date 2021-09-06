@@ -3,41 +3,49 @@ import {
   StyleSheet,
   View,
   Text,
-  Button,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MainContext} from '../contexts/MainContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useUser} from '../hooks/ApiHooks';
+import RegisterForm from '../components/RegisterForm';
+import LoginForm from '../components/LoginForm';
 
-const Login = (props) => { // props is needed for navigation
-  const [isLoggedIn, setIsLoggedIn] = useContext(MainContext);
-  console.log('ili', isLoggedIn);
+  const Login = () => {
+    const {setIsLoggedIn, setUser} = useContext(MainContext);
+    const {checkToken} = useUser();
+    // console.log('Login isLoggedIn', isLoggedIn);
 
-  const logIn = async () => {
-    setIsLoggedIn(true);
-    await AsyncStorage.setItem('userToken', 'abc');
-    props.navigation.navigate('Home');
+    const getToken = async () => {
+      const userToken = await AsyncStorage.getItem('userToken');
+      console.log('logIn asyncstorage token:', userToken);
+      if (userToken) {
+        const userInfo = await checkToken(userToken);
+        if (userInfo.user_id) {
+          setUser(userInfo);
+          setIsLoggedIn(true);
+        }
+      }
+    };
+
+    useEffect(() => {
+      getToken();
+    }, []);
+
+    return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+      >
+        <Text>Login</Text>
+
+        <LoginForm navigation={navigator} />
+        <RegisterForm navigation={navigator} />
+      </KeyboardAvoidingView>
+    );
   };
-  return (
-    <View style={styles.container}>
-      <Text>Login</Text>
-      <Button title="Sign in!" onPress={logIn}/>
-    </View>
-  );
-};
-
-const getToken = async () => {
-  const userToken = await AsyncStorage.getItem('userToken');
-  console.log('token', userToken);
-  if (userToken === 'abc') {
-    setIsLoggedIn(true);
-    props.navigation.navigate('Home');
-  }
-};
-useEffect(() => {
-  getToken();
-}, []);
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

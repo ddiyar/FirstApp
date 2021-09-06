@@ -1,13 +1,16 @@
 import React from 'react';
-import Navigators from './navigators/Navigators';
+import Navigator from './navigators/Navigator';
 import {MainProvider} from './contexts/MainContext';
+import {SafeAreaProvider} from 'react-native-safe-area-context/src/SafeAreaContext';
 
 const App = () => {
   return (
-    <MainProvider>
-        <Navigators></Navigators>
-    </MainProvider>
-  )
+    <SafeAreaProvider>
+      <MainProvider>
+        <Navigator />
+      </MainProvider>
+    </SafeAreaProvider>
+)
 };
 
 export default App;
