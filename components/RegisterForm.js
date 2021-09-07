@@ -1,35 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, Button} from 'react-native';
+import {View, Button, Alert} from 'react-native';
 import FormTextInput from './FormTextInput';
 import useSignUpForm from '../hooks/RegisterHooks';
+import {useUser} from '../hooks/ApiHooks';
+import {Input} from 'react-native-elements';
 
 const RegisterForm = ({navigation}) => {
-  const {handleInputChange} = useSignUpForm();
+  const {inputs, handleInputChange} = useSignUpForm();
+  const {register} = useUser();
 
-  const doRegister = () => {
-    // TODO: add register() to useUser() hook in API hooks
+  const doRegister = async () => {
+    try {
+      const registerInfo = await register(inputs);
+      if (registerInfo) {
+        Alert.alert(registerInfo.message);
+      }
+    } catch (e) {
+      Alert.alert(e.message);
+    }
   };
 
   return (
     <View>
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="username"
         onChangeText={(txt) => handleInputChange('username', txt)}
       />
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="password"
         onChangeText={(txt) => handleInputChange('password', txt)}
         secureTextEntry={true}
       />
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="email"
         onChangeText={(txt) => handleInputChange('email', txt)}
       />
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="full name"
         onChangeText={(txt) => handleInputChange('full_name', txt)}

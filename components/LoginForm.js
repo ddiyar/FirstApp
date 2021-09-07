@@ -6,6 +6,7 @@ import useLoginForm from '../hooks/LoginHooks';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useLogin} from '../hooks/ApiHooks';
+import {Input} from 'react-native-elements';
 
 const LoginForm = ({navigation}) => {
   const {inputs, handleInputChange} = useLoginForm();
@@ -28,19 +29,19 @@ const LoginForm = ({navigation}) => {
 
   return (
     <View>
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="username"
         onChangeText={(txt) => handleInputChange('username', txt)}
       />
-      <FormTextInput
+      <Input
         autoCapitalize="none"
         placeholder="password"
         onChangeText={(txt) => handleInputChange('password', txt)}
         secureTextEntry={true}
       />
 
-      <Button title="Login!" onPress={doLogin} />
+      <Button raised title="Login!" onPress={doLogin} />
     </View>
   );
 };

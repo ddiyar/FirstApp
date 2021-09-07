@@ -1,10 +1,8 @@
 import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
-  View,
-  Text,
   KeyboardAvoidingView,
-  Platform,
+  Platform, ImageBackground
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
@@ -12,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import RegisterForm from '../components/RegisterForm';
 import LoginForm from '../components/LoginForm';
+import {Card} from 'react-native-elements';
 
   const Login = () => {
     const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -39,20 +38,33 @@ import LoginForm from '../components/LoginForm';
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <Text>Login</Text>
-
-        <LoginForm navigation={navigator} />
-        <RegisterForm navigation={navigator} />
+        <ImageBackground
+          source={require('../assets/splash.png')}
+          style={styles.image}
+        >
+          <Card>
+            <Card.Title h4>Login</Card.Title>
+            <LoginForm navigation={navigator} />
+            <Card.Divider />
+            <Card.Title h4>Register</Card.Title>
+            <RegisterForm navigation={navigator} />
+          </Card>
+        </ImageBackground>
       </KeyboardAvoidingView>
     );
   };
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
   },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  }
 });
 
 Login.propTypes = {

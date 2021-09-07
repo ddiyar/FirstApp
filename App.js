@@ -10,7 +10,7 @@ const App = () => {
         <Navigator />
       </MainProvider>
     </SafeAreaProvider>
-)
+);
 };
 
 export default App;
