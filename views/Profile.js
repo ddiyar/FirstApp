@@ -20,6 +20,7 @@ const Profile = (props) => {
   const [avatar, setAvatar] = useState('https://placekitten.com/400/400');
 
   const {getFilesByTag} = useTag();
+
   useEffect(() => {
     (async () => {
       const file = await getFilesByTag('avatar_' + user.user_id);
@@ -33,6 +34,7 @@ const Profile = (props) => {
     setIsLoggedIn(false);
     };
   return (
+    <scrollView>
     <Card>
       <Card.Title>
         <Text h1>{user.username}</Text>
@@ -58,6 +60,7 @@ const Profile = (props) => {
         <ListItem.Chevron />
       </ListItem>
     </Card>
+    </scrollView>
   );
 };
 
