@@ -46,6 +46,7 @@ const useLogin = () => {
       body: userCredentials,
     };
     try {
+      // return await doFetch(baseUrl + 'login', requestOptions);
       const loginResponse = await doFetch(baseUrl + 'login', requestOptions);
       return loginResponse;
     } catch (error) {
