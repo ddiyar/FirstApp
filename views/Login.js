@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -13,7 +13,7 @@ import LoginForm from '../components/LoginForm';
 import {Card} from 'react-native-elements';
 import ListItem from '../components/ListItem';
 
-  const Login = () => {
+  const Login = ({navigation}) => {
     const {setIsLoggedIn, setUser} = useContext(MainContext);
     const {checkToken} = useUser();
     const [registerFormToggle, setRegisterFormToggle] = useState(false);
@@ -23,10 +23,14 @@ import ListItem from '../components/ListItem';
       const userToken = await AsyncStorage.getItem('userToken');
       console.log('logIn asyncstorage token:', userToken);
       if (userToken) {
-        const userInfo = await checkToken(userToken);
-        if (userInfo.user_id) {
-          setUser(userInfo);
-          setIsLoggedIn(true);
+        try {
+          const userInfo = await checkToken(userToken);
+          if (userInfo.user_id) {
+            setUser(userInfo);
+            setIsLoggedIn(true);
+          }
+        } catch (e) {
+          console.log('getToken', e.message);
         }
       }
     };
