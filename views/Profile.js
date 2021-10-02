@@ -1,22 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  Button,
-  ActivityIndicator
-} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
-import {Avatar} from 'react-native-elements/dist/avatar/Avatar';
-import {Card} from 'react-native-elements';
-import ListItem from '../components/ListItem';
+import {StyleSheet, Text, ActivityIndicator} from 'react-native';
+import {MainContext} from '../contexts/MainContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Card, ListItem} from 'react-native-elements';
+import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
+import {Avatar} from 'react-native-elements/dist/avatar/Avatar';
+import {ScrollView} from 'react-native-gesture-handler';
 
-const Profile = (props) => {
-  const {setIsLoggedIn, user} = useContext(MainContext)
-  //console.log('profile', isLoggedIn);
+const Profile = ({navigation}) => {
+  const {setIsLoggedIn, user} = useContext(MainContext);
   const [avatar, setAvatar] = useState('https://placekitten.com/400/400');
 
   const {getFilesByTag} = useTag();
@@ -32,48 +26,50 @@ const Profile = (props) => {
   const logout = async () => {
     await AsyncStorage.clear();
     setIsLoggedIn(false);
-    };
+  };
   return (
-    <scrollView>
-    <Card>
-      <Card.Title>
-        <Text h1>{user.username}</Text>
-      </Card.Title>
-      <Card.Image
-        source={{uri: avatar}}
-        style={styles.image}
-        PlaceholderContent={<ActivityIndicator />}
-      />
-      <ListItem>
-        <Avatar icon={{name: 'email', color: 'black'}} />
-        <Text>{user.email}</Text>
-      </ListItem>
-      <ListItem>
-        <Avatar icon={{name: 'user', type: 'font-awesome', color: 'black'}} />
-        <Text>{user.full_name}</Text>
-      </ListItem>
-      <ListItem bottomDivider onPress={logout}>
-        <Avatar icon={{name: 'logout', color: 'black'}} />
-        <ListItem.Content>
-          <ListItem.Title>Logout</ListItem.Title>
-        </ListItem.Content>
-        <ListItem.Chevron />
-      </ListItem>
-    </Card>
-    </scrollView>
+    <ScrollView>
+      <Card>
+        <Card.Title>
+          <Text h1>{user.username}</Text>
+        </Card.Title>
+        <Card.Image
+          source={{uri: avatar}}
+          style={styles.image}
+          PlaceholderContent={<ActivityIndicator />}
+        />
+        <ListItem>
+          <Avatar icon={{name: 'email', color: 'black'}} />
+          <Text>{user.email}</Text>
+        </ListItem>
+        <ListItem>
+          <Avatar icon={{name: 'user', type: 'font-awesome', color: 'black'}} />
+          <Text>{user.full_name}</Text>
+        </ListItem>
+        <ListItem
+          bottomDivider
+          onPress={() => {
+            navigation.navigate('My Files');
+          }}
+        >
+          <Avatar icon={{name: 'logout', color: 'black'}} />
+          <ListItem.Content>
+            <ListItem.Title>My Files</ListItem.Title>
+          </ListItem.Content>
+          <ListItem.Chevron />
+        </ListItem>
+        <ListItem bottomDivider onPress={logout}>
+          <Avatar icon={{name: 'logout', color: 'black'}} />
+          <ListItem.Content>
+            <ListItem.Title>Logout</ListItem.Title>
+          </ListItem.Content>
+          <ListItem.Chevron />
+        </ListItem>
+      </Card>
+    </ScrollView>
   );
 };
 
-/**const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-  },
-});
-*/
 const styles = StyleSheet.create({
   image: {width: '100%', height: undefined, aspectRatio: 1},
 });
